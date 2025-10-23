@@ -1,0 +1,1 @@
+const String apiBaseUrl = 'https://www.demonslayer-api.com/api/v1/';
