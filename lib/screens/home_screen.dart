@@ -1,3 +1,4 @@
+import 'package:demon_slayer/screens/combat_styles/combat_style_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -18,9 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
+    //Pantallas a las que se va a navegar
     CharacterScreen(),
     Text('Search'),
-    Text('Combat Styles'),
+    CombatStyle(),
   ];
 
   @override

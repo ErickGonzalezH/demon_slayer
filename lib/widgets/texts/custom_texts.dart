@@ -46,6 +46,7 @@ Widget richText({
           text: text2,
           style: TextStyle(
             color: textColor2 ?? Colors.black,
+            overflow: TextOverflow.ellipsis,
             fontSize: textSize2,
             fontWeight: fontWeight2,
           ),
