@@ -4,6 +4,7 @@ import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
 import 'package:demon_slayer/constants/constants.dart';
 import 'package:demon_slayer/widgets/texts/custom_texts.dart';
+import 'package:demon_slayer/screens/characteres/description_screen.dart';
 import 'package:demon_slayer/provider/characters/characters_provider.dart';
 
 
@@ -14,7 +15,7 @@ class CharacterScreen extends StatefulWidget {
   State<CharacterScreen> createState() => _CharacterScreenState();
 }
 
-class _CharacterScreenState extends State<CharacterScreen> {
+class _CharacterScreenState extends State<CharacterScreen> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
@@ -29,34 +30,15 @@ class _CharacterScreenState extends State<CharacterScreen> {
   Widget build(BuildContext context) {
       Size size = MediaQuery.of(context).size;
       final personajesProvider = Provider.of<CharactersProvider>(context);
-      
-      // Lista de colores para los bordes
-      final List<Color> borderColors = [
-        Colors.red,
-        Colors.blue,
-        Colors.green,
-        Colors.orange,
-        Colors.purple,
-        Colors.teal,
-        Colors.pink,
-        Colors.amber,
-        Colors.indigo,
-        Colors.cyan,
-      ];
-      
     return Scaffold(
-
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(marginPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
         
-            Padding(
-              padding: const EdgeInsets.all(marginPadding),
-              child: customText(text:'Sección 1', fontSize: 24, fontWeight: FontWeight.bold, ),
-            ),
-           
-            //SECCION 1
+            customText(text:'Personajes', fontSize: 24, fontWeight: FontWeight.bold, ),
+
             SizedBox(
               height: size.height * 0.7,
               width: size.width,
@@ -70,77 +52,57 @@ class _CharacterScreenState extends State<CharacterScreen> {
                         elevation: 0,
                         childPadding: 0,
                         borderRadius: 20,
-                        borderWidth: 1,
+                        borderWidth: 1.5,
                         borderColor: borderColors[index % borderColors.length],
-                        //Imagen con texto encima
+                        splashColor: borderColors[index % borderColors.length],
+                        onTap: () {
+                           Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DescriptionScreen(
+                                color: borderColors[index % borderColors.length],
+                                character: personajesProvider.characters!.content[index]
+                              ),
+                            ),
+                          );
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Row(
+                          child: Column(
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  personajes!.img.toString(), 
-                                  fit: BoxFit.fill,
-                                  height: size.height * .3,
-                                  width: size.width * .5,
+                              Hero(
+                                tag: personajes!.img.toString(),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    personajes.img.toString(), 
+                                    fit: BoxFit.fill,
+                                    height: size.height * .3,
+                                    width: size.width * .5,
+                                  ),
                                 ),
                               ),
-                              SizedBox(
-                                width: size.width * .4,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    richText(
-                                      text1: 'Nombre: ', 
-                                      fontWeight1: FontWeight.bold,
-                                      text2: personajes.name.toString()
-                                    ),
-                                    SizedBox(height: 10),
-                                    richText(
-                                      text1: 'Edad: ', 
-                                      fontWeight1: FontWeight.bold,
-                                      text2: personajes.age.toString()
-                                    ),
-                                    SizedBox(height: 10),
-                                    richText(
-                                      text1: 'Género: ',
-                                      fontWeight1: FontWeight.bold,
-                                      text2: personajes.gender.toString()
-                                    ),
-                                    SizedBox(height: 10),
-                                    richText(
-                                      text1: 'Race: ',
-                                      fontWeight1: FontWeight.bold,
-                                      text2: personajes.race.toString()
-                                    ),
-                                    SizedBox(height: 10),
-                                    richText(
-                                      text1: 'Descripción: ',
-                                      fontWeight1: FontWeight.bold,
-                                      text2: personajes.description.toString()
-                                    ),
-                                  ],
+                              Center(
+                                child: customText(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  text: personajes.name.toString()
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      )
+                      SizedBox(height: size.height * 0.02)
                     ],
                   );
                 }
               )
             ),
-        
-            
+
           ],
         ),
       ),
     );
-    
   }
 }

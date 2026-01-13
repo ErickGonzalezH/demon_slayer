@@ -37,11 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.orange[700]
         ),
         actions: [
-          Icon( Icons.search, size: 30),
-          SizedBox(width: 10),
-          Icon( Icons.add_alert_sharp, size: 30),
-          SizedBox(width: 10),
-          Icon(Icons.menu, size: 36 ),
+          IconButton(icon: Icon(Icons.menu, size: 36), onPressed: () {}),
         ],
       ),
 
